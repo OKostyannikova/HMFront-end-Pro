@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home work</title>
+    <meta charset="utf-8">
+
+</head>
+<body>
+
+<script>
+    var a = +prompt("Ведите первое число"),
+        b = +prompt("Ведите второе число"),
+        c = +prompt("Ведите третье число");
+    var abc = (a + b + c) / 3;
+
+    if (isNaN(abc)) {
+        alert("Некорректное значение. Введите числа.");
+    } else {
+        alert("Среднее арифметическое всех чисел: " + abc);
+    }
+
+
+    var numbers = prompt("Введите числа через запятую"),
+        re = /\s*,\s*/,
+        arrNumbers = numbers.split(re),
+        sum = 0;
+
+    for (var i = 0; i < arrNumbers.length; i++) {
+        sum += Number(arrNumbers[i]);
+    }
+    var result = sum / arrNumbers.length;
+    if (isNaN(result)) {
+        alert("Некорректное значение. Введите числа через запятую.");
+    } else {
+        alert("Среднее арифметическое всех чисел: " + result);
+    }
+
+
+    var string = prompt("Enter a string or number."),
+        stringCheck = string.toLowerCase().replace(/\s+/g, ''),
+        stringReverse = stringCheck.split("").reverse().join("");
+
+    if (stringCheck == stringReverse) {
+        alert(string + " IS a palindrome.")
+    } else {
+        alert(string + " IS NOT a palindrome.")
+    }
+</script>
+</body>
+</html>

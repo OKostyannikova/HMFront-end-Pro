@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home work</title>
+    <meta charset="utf-8">
+    <style>
+        div {
+            float: left;
+            margin-right: 40px;
+        }
+        button {
+            display: block;
+            margin-top: 20px;
+            width: 80%;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h3>Choose your currency:</h3>
+    <input id="uah" type="radio" checked name="startCurrency" value="UAH">UAH
+    <input id="usd" type="radio" name="startCurrency" value="USD">USD
+    <input id="eur" type="radio" name="startCurrency" value="EUR">EUR
+    <h3>Enter the amount</h3>
+    <input id="enterAmountInput" type="number" value="100">
+    <span id="startCurrencyLabel">UAH</span>
+
+    <button id="calcBtn">Сalculate</button>
+</div>
+
+<div>
+    <h3>Choose currency conversion:</h3>
+    <input id="uah-conv" type="radio" name="conversionCurrency" value="UAH">UAH
+    <input id="usd-conv" type="radio" checked name="conversionCurrency" value="USD">USD
+    <input id="eur-conv" type="radio" name="conversionCurrency" value="EUR">EUR
+    <h3>Conversion result:</h3>
+    <input id="resultInput" type="text">
+    <span id="conversionCurrencyLabel">USD</span>
+
+</div>
+
+<script>
+    var startCurrency = document.getElementsByName("startCurrency");
+    var startCurrencyLabel = document.getElementById("startCurrencyLabel");
+    for (var i = 0; i < startCurrency.length; i++) {
+        startCurrency[i].onchange = function () {
+            changeLabel(event, startCurrencyLabel);
+        }
+    }
+
+    var conversionCurrency = document.getElementsByName("conversionCurrency");
+    var conversionCurrencyLabel = document.getElementById("conversionCurrencyLabel");
+    for (var i = 0; i < conversionCurrency.length; i++) {
+        conversionCurrency[i].onchange = function () {
+            changeLabel(event, conversionCurrencyLabel);
+        }
+    }
+
+
+    function changeLabel(event, label) {
+        var checked = event.target;
+        var checkedValue = checked.value;
+        label.innerHTML = checkedValue;
+    }
+
+    var UAH_USD = 27.005,
+        UAH_EUR = 31.789,
+        USD_EUR = 0.84,
+        USD_UAH = 27.02,
+        EUR_USD = 1.17,
+        EUR_UAH = 31.89;
+
+    var btn = document.getElementById("calcBtn");
+    btn.onclick = convert;
+    var amoung = document.getElementById("enterAmountInput");
+    var resultInput = document.getElementById("resultInput");
+
+    function convert() {
+        if (document.getElementById("uah").checked && document.getElementById("usd-conv").checked) {
+            showResultDivision(UAH_USD);
+        } else if (document.getElementById("uah").checked && document.getElementById("eur-conv").checked) {
+            showResultDivision(UAH_EUR);
+        } else if (document.getElementById("usd").checked && document.getElementById("uah-conv").checked) {
+            showResultMultiply(USD_UAH);
+        } else if (document.getElementById("usd").checked && document.getElementById("eur-conv").checked) {
+            showResultMultiply(USD_EUR);
+        } else if (document.getElementById("eur").checked && document.getElementById("uah-conv").checked) {
+            showResultMultiply(EUR_UAH);
+        } else if (document.getElementById("eur").checked && document.getElementById("usd-conv").checked) {
+            showResultMultiply(EUR_USD);
+        } else {
+            showResultMultiply(1);
+        }
+    }
+
+    function showResultMultiply(current) {
+        resultInput.value = amoung.value * current;
+    }
+    function showResultDivision(current) {
+        var result = amoung.value / current;
+        resultInput.value = result.toFixed(2);
+    }
+
+</script>
+</body>
+</html>
