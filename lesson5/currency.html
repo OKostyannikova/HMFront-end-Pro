@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home work</title>
+    <meta charset="utf-8">
+
+</head>
+<body>
+<div>
+    <p>From:</p>
+    <input id="enter-amount-input" type="number" value="100">
+    <select id="from"></select>
+    <p>To:</p>
+    <input id="result" type="text">
+    <select id="to"></select>
+
+</div>
+
+<script>
+    function Money(name, value) {
+        this.name = name;
+        this.value = value;
+    }
+
+    var moneyArr = [
+        new Money("UAH", 1),
+        new Money("USA", 28),
+        new Money("EUR", 31),
+        new Money("RUB", 0.4)
+    ];
+    var fromSelect = document.getElementById("from");
+    var toSelect = document.getElementById("to");
+    var inputNum = document.getElementById("enter-amount-input");
+
+    moneyArr.forEach(function (money) {
+        var option = document.createElement("option");
+        option.text = money.name;
+        fromSelect.add(option);
+
+        option = document.createElement("option");
+        option.text = money.name;
+        toSelect.add(option);
+    });
+
+    inputNum.oninput = fromSelect.oninput = toSelect.oninput = function (event) {
+        var fromMoney = moneyArr[fromSelect.options.selectedIndex];
+        var toMoney = moneyArr[toSelect.options.selectedIndex];
+        var num = +inputNum.value;
+        var result = document.getElementById("result");
+
+        result.value = (fromMoney.value / toMoney.value * num).toFixed(2);
+    }
+
+</script>
+</body>
+</html>

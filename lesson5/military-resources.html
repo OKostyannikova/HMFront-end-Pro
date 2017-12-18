@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home work</title>
+    <meta charset="utf-8">
+
+</head>
+<body>
+
+<script>
+    var militaryResourcesObjects = new Array();
+
+    function CreateMilitaryResources(name, healthPoints, maxHealthPoints, currentlyDistance, maxDayDistance) {
+        this.name = name;
+        this.healthPoints = healthPoints;
+        this.maxHealthPoints = maxHealthPoints;
+        this.currentlyDistance = currentlyDistance;
+        this.maxDayDistance = maxDayDistance;
+
+        return militaryResourcesObjects.push(this);
+    };
+
+    var soldier = new CreateMilitaryResources("soldier", 3, 10, 10, 50);
+    var horse = new CreateMilitaryResources("horse", 5, 5, 30, 80);
+    var tank = new CreateMilitaryResources("tank", 20, 30, 100, 100);
+
+
+    function checkDistance(distance) {
+        militaryResourcesObjects.forEach(function (obj) {
+            if (distance + obj.currentlyDistance >= obj.maxDayDistance) {
+                return console.log(obj.name + " can\'t cover more!");
+            } else {
+                obj.currentlyDistance += distance;
+            }
+        });
+    }
+
+
+    function maxHealth(i) {
+        if (militaryResourcesObjects[i]) {
+            militaryResourcesObjects[i].healthPoints = militaryResourcesObjects[i].maxHealthPoints;
+        } else {
+            militaryResourcesObjects.forEach(function (obj) {
+                obj.healthPoints = obj.maxHealthPoints;
+            });
+        }
+    }
+
+
+    function addAvailableDistance(i) {
+        if (militaryResourcesObjects[i]) {
+            militaryResourcesObjects[i].currentlyDistance -= (militaryResourcesObjects[i].maxDayDistance * 10 / 100);
+        } else {
+            militaryResourcesObjects.forEach(function (obj) {
+                obj.currentlyDistance -= (obj.maxDayDistance * 10 / 100);
+            });
+        }
+    }
+
+
+    function checkObjectsCanCoverTheDistance(distance) {
+        return militaryResourcesObjects.filter(function (obj) {
+            return distance <= obj.maxDayDistance - obj.currentlyDistance;
+        });
+    }
+
+
+    function concatArrays(mainArray, extraArray) {
+        return mainArray.concat(extraArray);
+    }
+
+
+    function checkReadyToFight(damage) {
+        return militaryResourcesObjects.every(function (obj) {
+            return damage <= obj.healthPoints;
+        });
+    }
+
+    function changePositionObj(first, second, arr) {
+        return [arr[first], arr[second]] = [arr[second], arr[first]];
+    }
+
+    function clonObject(i) {
+        var obj = militaryResourcesObjects[i];
+        var clone = {};
+        for (var key in  obj) {
+            clone[key] = obj[key];
+        }
+        return clone;
+    }
+
+
+</script>
+</body>
+</html>
