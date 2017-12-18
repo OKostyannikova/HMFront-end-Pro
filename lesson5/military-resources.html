@@ -79,6 +79,13 @@
     function changePositionObj(first, second, arr) {
         return [arr[first], arr[second]] = [arr[second], arr[first]];
     }
+    
+    function changePositionObj2(first, second, arr) {
+        var temp;
+        temp = arr[first];
+        arr[first] = arr[second];
+        arr[second] = temp;
+    }
 
     function clonObject(i) {
         var obj = militaryResourcesObjects[i];
