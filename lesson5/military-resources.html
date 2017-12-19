@@ -8,25 +8,24 @@
 <body>
 
 <script>
-    var militaryResourcesObjects = new Array();
 
-    function CreateMilitaryResources(name, healthPoints, maxHealthPoints, currentlyDistance, maxDayDistance) {
+    function MilitaryResource(name, healthPoints, maxHealthPoints, currentlyDistance, maxDayDistance) {
         this.name = name;
         this.healthPoints = healthPoints;
         this.maxHealthPoints = maxHealthPoints;
         this.currentlyDistance = currentlyDistance;
         this.maxDayDistance = maxDayDistance;
+    }
 
-        return militaryResourcesObjects.push(this);
-    };
-
-    var soldier = new CreateMilitaryResources("soldier", 3, 10, 10, 50);
-    var horse = new CreateMilitaryResources("horse", 5, 5, 30, 80);
-    var tank = new CreateMilitaryResources("tank", 20, 30, 100, 100);
+    var militaryResources = [
+        new MilitaryResource("soldier", 3, 10, 10, 50),
+        new MilitaryResource("horse", 5, 5, 30, 80),
+        new MilitaryResource("tank", 20, 30, 100, 100)
+    ];
 
 
     function checkDistance(distance) {
-        militaryResourcesObjects.forEach(function (obj) {
+        militaryResources.forEach(function (obj) {
             if (distance + obj.currentlyDistance >= obj.maxDayDistance) {
                 return console.log(obj.name + " can\'t cover more!");
             } else {
@@ -37,10 +36,10 @@
 
 
     function maxHealth(i) {
-        if (militaryResourcesObjects[i]) {
-            militaryResourcesObjects[i].healthPoints = militaryResourcesObjects[i].maxHealthPoints;
+        if (militaryResources[i]) {
+            militaryResources[i].healthPoints = militaryResources[i].maxHealthPoints;
         } else {
-            militaryResourcesObjects.forEach(function (obj) {
+            militaryResources.forEach(function (obj) {
                 obj.healthPoints = obj.maxHealthPoints;
             });
         }
@@ -48,10 +47,10 @@
 
 
     function addAvailableDistance(i) {
-        if (militaryResourcesObjects[i]) {
-            militaryResourcesObjects[i].currentlyDistance -= (militaryResourcesObjects[i].maxDayDistance * 10 / 100);
+        if (militaryResources[i]) {
+            militaryResources[i].currentlyDistance -= (militaryResources[i].maxDayDistance * 10 / 100);
         } else {
-            militaryResourcesObjects.forEach(function (obj) {
+            militaryResources.forEach(function (obj) {
                 obj.currentlyDistance -= (obj.maxDayDistance * 10 / 100);
             });
         }
@@ -59,7 +58,7 @@
 
 
     function checkObjectsCanCoverTheDistance(distance) {
-        return militaryResourcesObjects.filter(function (obj) {
+        return militaryResources.filter(function (obj) {
             return distance <= obj.maxDayDistance - obj.currentlyDistance;
         });
     }
@@ -71,7 +70,7 @@
 
 
     function checkReadyToFight(damage) {
-        return militaryResourcesObjects.every(function (obj) {
+        return militaryResources.every(function (obj) {
             return damage <= obj.healthPoints;
         });
     }
@@ -88,7 +87,7 @@
     }
 
     function clonObject(i) {
-        var obj = militaryResourcesObjects[i];
+        var obj = militaryResources[i];
         var clone = {};
         for (var key in  obj) {
             clone[key] = obj[key];
