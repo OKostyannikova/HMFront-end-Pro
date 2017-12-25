@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home work</title>
+    <meta charset="utf-8">
+
+</head>
+<body>
+
+<script>
+    function Resource(name, product) {
+        this.name = name;
+        this.product = product;
+        this.readyHarvest = 0;
+        this.income = 0;
+        this.durability = 5;
+        this.sown = false;
+    }
+
+    Resource.prototype.isReadyForPlanting = function () {
+        return this.sown === false && this.durability > 0;
+    };
+
+    Resource.prototype.plant = function () {
+        try {
+            if (!this.isReadyForPlanting()) {
+                throw new Error("Resource is already planted!")
+            }
+            this.sown = true;
+            this.durability -= 1;
+            var obj = this;
+            setTimeout(function () {
+                obj.readyHarvest = 1;
+            }, 10000);
+            this.income = Math.floor(Math.random() * (20 - 15) + 15);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    Resource.prototype.harvest = function () {
+        if (this.readyHarvest) {
+            this.readyHarvest = 0;
+            this.sown = false;
+            for (var i = 0; i < this.income; i++) {
+                farm.products.push(new Product(this.product, 1));
+            }
+            console.log(this.name + " grew " + this.income + " " + this.product);
+        } else {
+            console.log("From the " + this.name + " nothing to harvest");
+        }
+    };
+
+    Resource.prototype.restore = function () {
+        this.durability = 5;
+    };
+
+    Resource.prototype.clone = function () {
+        var clone = {};
+        for (var key in this) {
+            clone[key] = this[key];
+        }
+        return clone;
+    };
+
+
+    function Farm(resources) {
+        this.farm = [];
+        this.farm = this.farm.concat(resources);
+        this.products = [];
+        this.cash = 0;
+    }
+
+    Farm.prototype.harvest = function () {
+        this.farm.forEach(function (resource) {
+            resource.harvest();
+        })
+    };
+
+    Farm.prototype.sellProducts = function () {
+        this.products.forEach(function (product) {
+            farm.cash += product.cost;
+        });
+        this.products.length = 0;
+    };
+
+    var timer = setInterval(function () {
+        var ready = farm.farm.every(function (resource) {
+            return resource.readyHarvest === 1;
+        });
+        if (ready) {
+            clearInterval(timer);
+            console.log("All resources ready to harvest");
+        }
+    }, 2000);
+
+
+    function Product(type, cost) {
+        this.type = type;
+        this.cost = cost;
+    }
+
+    var resources = [
+        new Resource("Plot", "carrots"),
+        new Resource("Plot", "potatoes")
+    ];
+    var farm = new Farm(resources);
+    resources[1].plant();
+
+</script>
+</body>
+</html>
