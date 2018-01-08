@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home work</title>
+    <meta charset="utf-8">
+    <style>
+        #farm {
+            background-color: #F8F4DB;
+            padding: 20px;
+            display: flex;
+        }
+
+        #field {
+            background-color: #61AE24;
+            width: 70%;
+            min-height: 300px;
+            margin-right: 20px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        #field > div {
+            width: 30%;
+            height: 80px;
+            background-color: #F18D05;
+        }
+
+        #buildings {
+            width: 20%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        #buildings > div {
+            background-color: #7f7f7f;
+            padding: 15px;
+            height: 127px;
+            width: 100%;
+        }
+        h4 {
+            margin-top: 0;
+            font-family: "Arial", sans-serif;
+        }
+        .resource-title {
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <div id="farm">
+        <div id="field"></div>
+        <div id="buildings"></div>
+    </div>
+</div>
+
+<script src="resource.js"></script>
+<script src="farm.js"></script>
+<script src="product.js"></script>
+<script src="dom.js"></script>
+</body>
+</html>
