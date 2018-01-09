@@ -11,8 +11,7 @@ var resources = [
 var farm = new Farm(resources);
 
 
-/*
-farm.plant();
+/*farm.plant();
 setTimeout(function () {
     farm.harvest();
 }, 2000);*/
