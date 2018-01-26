@@ -14,23 +14,15 @@ var planner = (function () {
 
     var addTaskForm = document.createElement("form"),
         addTaskInput = document.createElement("input"),
-        taskTimeStart = document.createElement("span"),
-        taskTimeEnd,
-        minutesLabel = document.createElement("span"),
-        hoursLabel = document.createElement("span"),
-        selectHours = document.createElement("select"),
-        selectMinutes = document.createElement("select"),
+        selectStartTime = document.createElement("input"),
+        selectEndTime = selectStartTime.cloneNode(),
         addTaskButton = document.createElement("button"),
         cancelButton = document.createElement("button");
 
-    taskTimeStart.className = "task-time task-time-start";
-
-    hoursLabel.innerText = "hh";
-    minutesLabel.innerText = "mm";
+    addTaskForm.style.display = "none";
     addTaskForm.name = "createTask";
-    selectHours.name = "selectHours";
-    selectMinutes.name = "selectMinutes";
-
+    selectStartTime.type = "time";
+    selectEndTime.type = "time";
     addTaskButton.innerText = "Создать";
     cancelButton.innerText = "Отмена";
 
@@ -60,49 +52,30 @@ var planner = (function () {
 
     plannerBlock.appendChild(addTaskForm);
     addTaskForm.appendChild(addTaskInput);
-    addTaskForm.appendChild(taskTimeStart);
-    taskTimeStart.appendChild(hoursLabel);
-    taskTimeStart.appendChild(hoursLabel);
-    taskTimeStart.appendChild(selectHours);
-    taskTimeStart.appendChild(minutesLabel);
-    taskTimeStart.appendChild(selectMinutes);
-
-
-    taskTimeEnd = taskTimeStart.cloneNode(true);
-    taskTimeEnd.className = "task-time task-time-end";
-    addTaskForm.appendChild(taskTimeEnd);
+    addTaskForm.appendChild(selectStartTime);
+    addTaskForm.appendChild(selectEndTime);
     addTaskForm.appendChild(addTaskButton);
     addTaskForm.appendChild(cancelButton);
 
-    document.createTask.selectHours.forEach(sel => {
-        for (var i = 0; i < 24; i++) {
-            sel.options[i] = i < 10 ? new Option("0" + i, i, false, false) :
-                new Option(i, i, false, false);
-        }
-    });
-
-    document.createTask.selectMinutes.forEach(sel => {
-        for (var i = 0; i < 60; i++) {
-            sel.options[i] = i < 10 ? new Option("0" + i, i, false, false) :
-                new Option(i, i, false, false);
-        }
-    });
 
     newTaskButton.addEventListener("click", function () {
-        plannerBlock.removeChild(newTaskButton);
+        addTaskForm.style.display = "block";
+        newTaskButton.style.display = "none";
     });
 
     addTaskButton.addEventListener("click", function (e) {
+        var taskTime = selectStartTime.value + " - " + selectEndTime.value;
         plannerTaskItem = plannerTaskItem.cloneNode(true);
-        plannerTaskItem.innerHTML = addTaskInput.value;
+        plannerTaskItem.innerHTML = taskTime + " " + addTaskInput.value;
         plannerTaskList.appendChild(plannerTaskItem);
         addTaskInput.value = "";
         e.preventDefault();
     });
 
     cancelButton.addEventListener("click", function (e) {
-        plannerBlock.removeChild(addTaskForm);
-        plannerBlock.appendChild(newTaskButton);
+        addTaskForm.style.display = "none";
+        newTaskButton.style.display = "block";
+        e.preventDefault();
     })
 
 
