@@ -3,7 +3,6 @@ var planner = (function () {
         plannerBlock = document.createElement('div'),
         plannerTitle = document.createElement('span'),
         plannerTaskList = document.createElement("ol"),
-        plannerTaskItem = document.createElement("li"),
         newTaskButton = document.createElement("button");
 
 
@@ -30,6 +29,7 @@ var planner = (function () {
     addTaskForm.name = "createTask";
     selectHours.name = "selectHours";
     selectMinutes.name = "selectMinutes";
+    addTaskForm.style.display = "none";
 
     addTaskButton.innerText = "Создать";
     cancelButton.innerText = "Отмена";
@@ -44,7 +44,6 @@ var planner = (function () {
     plannerTitle.classList.add("planner-title");
     plannerTitle.innerHTML = "Список задач:"
     plannerTaskList.classList.add("planner-task-list");
-    plannerTaskItem.classList.add("planner-task-item");
     newTaskButton.classList.add("new-task-button");
     newTaskButton.innerText = "Новая задача";
 
@@ -56,9 +55,10 @@ var planner = (function () {
 
     plannerBlock.appendChild(plannerTitle);
     plannerBlock.appendChild(plannerTaskList);
+    plannerBlock.appendChild(addTaskForm);
     plannerBlock.appendChild(newTaskButton);
 
-    plannerBlock.appendChild(addTaskForm);
+
     addTaskForm.appendChild(addTaskInput);
     addTaskForm.appendChild(taskTimeStart);
     taskTimeStart.appendChild(hoursLabel);
@@ -76,34 +76,67 @@ var planner = (function () {
 
     document.createTask.selectHours.forEach(sel => {
         for (var i = 0; i < 24; i++) {
-            sel.options[i] = i < 10 ? new Option("0" + i, i, false, false) :
+            sel.options[i] = i < 10 ? new Option("0" + i, "0" + i, false, false) :
                 new Option(i, i, false, false);
         }
     });
 
     document.createTask.selectMinutes.forEach(sel => {
         for (var i = 0; i < 60; i++) {
-            sel.options[i] = i < 10 ? new Option("0" + i, i, false, false) :
+            sel.options[i] = i < 10 ? new Option("0" + i, "0" + i, false, false) :
                 new Option(i, i, false, false);
         }
     });
 
+
+
     newTaskButton.addEventListener("click", function () {
+        addTaskForm.style.display = "block";
         plannerBlock.removeChild(newTaskButton);
     });
 
+    function Task(text, startHour, startMinutes, endHour, endMinutes) {
+        this.text = text;
+        this.startHour = startHour;
+        this.startMinutes = startMinutes;
+        this.endHour = endHour;
+        this.endMinutes = endMinutes;
+        this.message = this.text + " " + this.startHour + ":" + this.startMinutes +
+            " - " + this.endHour + ":" + this.endMinutes;
+    }
+
+    var tackList = [];
+
     addTaskButton.addEventListener("click", function (e) {
-        plannerTaskItem = plannerTaskItem.cloneNode(true);
-        plannerTaskItem.innerHTML = addTaskInput.value;
+        var plannerTaskItem = document.createElement("li");
+        plannerTaskItem.classList.add("planner-task-item");
+
+        var task = new Task(addTaskInput.value, addTaskForm[1].value, addTaskForm[2].value,
+            addTaskForm[3].value, addTaskForm[4].value);
+        tackList.push(task);
+        plannerTaskItem.innerHTML = task.message;
         plannerTaskList.appendChild(plannerTaskItem);
         addTaskInput.value = "";
         e.preventDefault();
     });
 
     cancelButton.addEventListener("click", function (e) {
-        plannerBlock.removeChild(addTaskForm);
+        addTaskForm.style.display = "none";
         plannerBlock.appendChild(newTaskButton);
-    })
+        e.preventDefault();
+    });
+
+
+    function showCurrentTask(hours, minutes) {
+        tackList.forEach(function(obj){
+             if (obj.startHour >= hours && obj.startMinutes >= minutes) {
+                currentTask.innerHTML = obj.message;
+             } else if (obj.endHour <= hours && obj.endMinutes <= minutes) {
+                currentTask.innerHTML = "";
+                delete obj;
+             }
+        })
+    }
 
 
 
@@ -118,7 +151,9 @@ var planner = (function () {
         if (seconds < 10) seconds = "0" + seconds;
 
         watchDisplay.innerHTML = hours + ":" + minutes + ":" + seconds;
-
+        showCurrentTask(hours, minutes);
     }, 1000);
+
+    
 
 }());
