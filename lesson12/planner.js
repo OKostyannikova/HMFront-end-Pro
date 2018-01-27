@@ -74,19 +74,21 @@ var planner = (function () {
     addTaskForm.appendChild(addTaskButton);
     addTaskForm.appendChild(cancelButton);
 
-    document.createTask.selectHours.forEach(sel => {
-        for (var i = 0; i < 24; i++) {
-            sel.options[i] = i < 10 ? new Option("0" + i, "0" + i, false, false) :
-                new Option(i, i, false, false);
-        }
-    });
+    (function formSelectTime() {
+        document.createTask.selectHours.forEach(sel => {
+            for (var i = 0; i < 24; i++) {
+                sel.options[i] = i < 10 ? new Option("0" + i, "0" + i, false, false) :
+                    new Option(i, i, false, false);
+            }
+        });
 
-    document.createTask.selectMinutes.forEach(sel => {
-        for (var i = 0; i < 60; i++) {
-            sel.options[i] = i < 10 ? new Option("0" + i, "0" + i, false, false) :
-                new Option(i, i, false, false);
-        }
-    });
+        document.createTask.selectMinutes.forEach(sel => {
+            for (var i = 0; i < 60; i++) {
+                sel.options[i] = i < 10 ? new Option("0" + i, "0" + i, false, false) :
+                    new Option(i, i, false, false);
+            }
+        });
+    })();
 
 
 
@@ -94,6 +96,7 @@ var planner = (function () {
         addTaskForm.style.display = "block";
         plannerBlock.removeChild(newTaskButton);
     });
+
 
     function Task(text, startHour, startMinutes, endHour, endMinutes) {
         this.text = text;
@@ -103,6 +106,14 @@ var planner = (function () {
         this.endMinutes = endMinutes;
         this.message = this.text + " " + this.startHour + ":" + this.startMinutes +
             " - " + this.endHour + ":" + this.endMinutes;
+    }
+
+
+    Task.prototype.checkTime = function (currentHour, currentMinutes) {
+        if (this.startHour >= currentHour && this.startHour >= currentMinutes) {
+            return true;
+        } else
+            return false;
     }
 
     var tackList = [];
@@ -128,16 +139,14 @@ var planner = (function () {
 
 
     function showCurrentTask(hours, minutes) {
-        tackList.forEach(function(obj){
-             if (obj.startHour >= hours && obj.startMinutes >= minutes) {
+        tackList.forEach(function (obj) {
+            if (obj.checkTime(hours, minutes)) {
                 currentTask.innerHTML = obj.message;
-             } else if (obj.endHour <= hours && obj.endMinutes <= minutes) {
+            } else {
                 currentTask.innerHTML = "";
-                delete obj;
-             }
-        })
-    }
-
+            }
+        });
+    };
 
 
 
@@ -149,11 +158,10 @@ var planner = (function () {
         if (hours < 10) hours = "0" + hours;
         if (minutes < 10) minutes = "0" + minutes;
         if (seconds < 10) seconds = "0" + seconds;
-
         watchDisplay.innerHTML = hours + ":" + minutes + ":" + seconds;
         showCurrentTask(hours, minutes);
     }, 1000);
 
-    
+
 
 }());
