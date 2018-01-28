@@ -1,97 +1,196 @@
-var planner = (function () {
-    var planner = document.getElementById("planner"),
-        plannerBlock = document.createElement('div'),
-        plannerTitle = document.createElement('span'),
-        plannerTaskList = document.createElement("ol"),
-        plannerTaskItem = document.createElement("li"),
-        newTaskButton = document.createElement("button");
+
+var planner = document.getElementById("planner"),
+    plannerBlock = document.createElement('div'),
+    plannerTitle = document.createElement('span'),
+    plannerTaskList = document.createElement("ol"),
+    newTaskButton = document.createElement("button");
 
 
-    var watchBlock = document.createElement('div'),
-        currentTask = document.createElement('span'),
-        watchDisplay = document.createElement('div');
+var watchBlock = document.createElement('div'),
+    currentTask = document.createElement('span'),
+    watchDisplay = document.createElement('div');
 
 
-    var addTaskForm = document.createElement("form"),
-        addTaskInput = document.createElement("input"),
-        selectStartTime = document.createElement("input"),
-        selectEndTime = selectStartTime.cloneNode(),
-        addTaskButton = document.createElement("button"),
-        cancelButton = document.createElement("button");
+var addTaskForm = document.createElement("form"),
+    addTaskInput = document.createElement("input"),
+    taskTimeStart = document.createElement("span"),
+    taskTimeEnd,
+    minutesLabel = document.createElement("span"),
+    hoursLabel = document.createElement("span"),
+    selectHours = document.createElement("select"),
+    selectMinutes = document.createElement("select"),
+    addTaskButton = document.createElement("button"),
+    cancelButton = document.createElement("button");
 
+taskTimeStart.className = "task-time task-time-start";
+
+hoursLabel.innerText = "hh";
+minutesLabel.innerText = "mm";
+addTaskForm.name = "createTask";
+selectHours.name = "selectHours";
+selectMinutes.name = "selectMinutes";
+addTaskForm.style.display = "none";
+
+addTaskButton.innerText = "Создать";
+cancelButton.innerText = "Отмена";
+
+
+
+plannerBlock.classList.add("planner-block");
+watchBlock.classList.add("watch-block");
+currentTask.classList.add("current-task");
+watchDisplay.classList.add("watch-display");
+
+plannerTitle.classList.add("planner-title");
+plannerTitle.innerHTML = "Список задач:"
+plannerTaskList.classList.add("planner-task-list");
+newTaskButton.classList.add("new-task-button");
+newTaskButton.innerText = "Новая задача";
+
+
+planner.appendChild(plannerBlock);
+planner.appendChild(watchBlock);
+watchBlock.appendChild(currentTask);
+watchBlock.appendChild(watchDisplay);
+
+plannerBlock.appendChild(plannerTitle);
+plannerBlock.appendChild(plannerTaskList);
+plannerBlock.appendChild(addTaskForm);
+plannerBlock.appendChild(newTaskButton);
+
+
+addTaskForm.appendChild(addTaskInput);
+addTaskForm.appendChild(taskTimeStart);
+taskTimeStart.appendChild(hoursLabel);
+taskTimeStart.appendChild(hoursLabel);
+taskTimeStart.appendChild(selectHours);
+taskTimeStart.appendChild(minutesLabel);
+taskTimeStart.appendChild(selectMinutes);
+
+
+taskTimeEnd = taskTimeStart.cloneNode(true);
+taskTimeEnd.className = "task-time task-time-end";
+addTaskForm.appendChild(taskTimeEnd);
+addTaskForm.appendChild(addTaskButton);
+addTaskForm.appendChild(cancelButton);
+
+(function formSelectTime() {
+    document.createTask.selectHours.forEach(sel => {
+        for (var i = 0; i < 24; i++) {
+            sel.options[i] = i < 10 ? new Option("0" + i, "0" + i, false, false) :
+                new Option(i, i, false, false);
+        }
+    });
+
+    document.createTask.selectMinutes.forEach(sel => {
+        for (var i = 0; i < 60; i++) {
+            sel.options[i] = i < 10 ? new Option("0" + i, "0" + i, false, false) :
+                new Option(i, i, false, false);
+        }
+    });
+})();
+
+
+newTaskButton.addEventListener("click", function () {
+    addTaskForm.style.display = "block";
+    plannerBlock.removeChild(newTaskButton);
+});
+
+addTaskButton.addEventListener("click", function (e) {
+    var task = new Task(addTaskInput.value, addTaskForm[1].value, addTaskForm[2].value,
+        addTaskForm[3].value, addTaskForm[4].value);
+    newPlanner.addTask(task);
+    e.preventDefault();
+});
+
+cancelButton.addEventListener("click", function (e) {
     addTaskForm.style.display = "none";
-    addTaskForm.name = "createTask";
-    selectStartTime.type = "time";
-    selectEndTime.type = "time";
-    addTaskButton.innerText = "Создать";
-    cancelButton.innerText = "Отмена";
-
-
-
-    plannerBlock.classList.add("planner-block");
-    watchBlock.classList.add("watch-block");
-    currentTask.classList.add("current-task");
-    watchDisplay.classList.add("watch-display");
-
-    plannerTitle.classList.add("planner-title");
-    plannerTitle.innerHTML = "Список задач:"
-    plannerTaskList.classList.add("planner-task-list");
-    plannerTaskItem.classList.add("planner-task-item");
-    newTaskButton.classList.add("new-task-button");
-    newTaskButton.innerText = "Новая задача";
-
-
-    planner.appendChild(plannerBlock);
-    planner.appendChild(watchBlock);
-    watchBlock.appendChild(currentTask);
-    watchBlock.appendChild(watchDisplay);
-
-    plannerBlock.appendChild(plannerTitle);
-    plannerBlock.appendChild(plannerTaskList);
     plannerBlock.appendChild(newTaskButton);
-
-    plannerBlock.appendChild(addTaskForm);
-    addTaskForm.appendChild(addTaskInput);
-    addTaskForm.appendChild(selectStartTime);
-    addTaskForm.appendChild(selectEndTime);
-    addTaskForm.appendChild(addTaskButton);
-    addTaskForm.appendChild(cancelButton);
+    e.preventDefault();
+});
 
 
-    newTaskButton.addEventListener("click", function () {
-        addTaskForm.style.display = "block";
-        newTaskButton.style.display = "none";
-    });
+function Planner() {
+    this.waitingTasks = [];
+    this.activeTasks = [];
+}
 
-    addTaskButton.addEventListener("click", function (e) {
-        var taskTime = selectStartTime.value + " - " + selectEndTime.value;
-        plannerTaskItem = plannerTaskItem.cloneNode(true);
-        plannerTaskItem.innerHTML = taskTime + " " + addTaskInput.value;
-        plannerTaskList.appendChild(plannerTaskItem);
-        addTaskInput.value = "";
-        e.preventDefault();
-    });
+Planner.prototype.addTask = function (task) {
+    this.waitingTasks.push(task);
+    this.showWaitingList();
+}
 
-    cancelButton.addEventListener("click", function (e) {
-        addTaskForm.style.display = "none";
-        newTaskButton.style.display = "block";
-        e.preventDefault();
+Planner.prototype.showWaitingList = function () {
+    var plannerTaskItem = document.createElement("li");
+    plannerTaskItem.classList.add("planner-task-item");
+    this.waitingTasks.forEach(function (task) {
+        plannerTaskItem.innerHTML = task.message;
     })
+    plannerTaskList.appendChild(plannerTaskItem);
+
+}
+
+Planner.prototype.showActiveTask = function (currentHour, currentMinutes) {
+    var self = this;
+    this.waitingTasks.forEach(function (task, index, arr) {
+        if (task.checkTime(currentHour, currentMinutes)) {
+            arr.splice(index, 1);
+            self.activeTasks.push(task);
+        }
+    })
+    this.activeTasks.forEach(function (task, index, arr) {
+        if (!task.checkTime(currentHour, currentMinutes)) {
+            arr.splice(index, 1);
+            currentTask.innerHTML = "";
+        } else {
+            currentTask.innerHTML = task.message;
+            newPlanner.showWaitingList();
+        }
+    })
+}
+
+
+function Task(text, startHour, startMinutes, endHour, endMinutes) {
+    this.text = text;
+    this.startHour = startHour;
+    this.startMinutes = startMinutes;
+    this.endHour = endHour;
+    this.endMinutes = endMinutes;
+    this.message = this.text + " " + this.startHour + ":" + this.startMinutes +
+        " - " + this.endHour + ":" + this.endMinutes;
+}
+
+Task.prototype.checkTime = function (currentHour, currentMinutes) {
+    if ((currentHour >= this.startHour && currentMinutes >= this.startMinutes)
+        && (currentHour <= this.endHour && currentMinutes < this.endMinutes)) {
+        return true;
+    } else
+        return false;
+}
+
+
+function showCurrentTask(hours, minutes) {
+    tackList.forEach(function (obj) {
+        if (obj.checkTime(hours, minutes)) {
+            currentTask.innerHTML = obj.message;
+        } else {
+            currentTask.innerHTML = "";
+        }
+    });
+};
 
 
 
+setInterval(function () {
+    var time = new Date(),
+        hours = time.getHours(),
+        minutes = time.getMinutes(),
+        seconds = time.getSeconds();
+    if (hours < 10) hours = "0" + hours;
+    if (minutes < 10) minutes = "0" + minutes;
+    if (seconds < 10) seconds = "0" + seconds;
+    watchDisplay.innerHTML = hours + ":" + minutes + ":" + seconds;
+    newPlanner.showActiveTask(hours, minutes);
+}, 1000);
 
-    setInterval(function () {
-        var time = new Date(),
-            hours = time.getHours(),
-            minutes = time.getMinutes(),
-            seconds = time.getSeconds();
-        if (hours < 10) hours = "0" + hours;
-        if (minutes < 10) minutes = "0" + minutes;
-        if (seconds < 10) seconds = "0" + seconds;
-
-        watchDisplay.innerHTML = hours + ":" + minutes + ":" + seconds;
-
-    }, 1000);
-
-}());
+var newPlanner = new Planner();
