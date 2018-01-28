@@ -121,9 +121,11 @@ Planner.prototype.addTask = function (task) {
 }
 
 Planner.prototype.showWaitingList = function () {
-    var plannerTaskItem = document.createElement("li");
-    plannerTaskItem.classList.add("planner-task-item");
+    plannerTaskList.innerHTML = "";
+
     this.waitingTasks.forEach(function (task) {
+        var plannerTaskItem = document.createElement("li");
+        plannerTaskItem.classList.add("planner-task-item");
         plannerTaskItem.innerHTML = task.message;
     })
     plannerTaskList.appendChild(plannerTaskItem);
