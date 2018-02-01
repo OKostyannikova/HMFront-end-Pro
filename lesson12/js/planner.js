@@ -40,7 +40,6 @@ plannerBlock.classList.add("planner-block");
 watchBlock.classList.add("watch-block");
 currentTask.classList.add("current-task");
 watchDisplay.classList.add("watch-display");
-
 plannerTitle.classList.add("planner-title");
 plannerTitle.innerHTML = "Список задач:"
 plannerTaskList.classList.add("planner-task-list");
@@ -60,7 +59,6 @@ plannerBlock.appendChild(newTaskButton);
 
 addTaskForm.appendChild(addTaskInput);
 addTaskForm.appendChild(taskTimeStart);
-//taskTimeStart.appendChild(hoursLabel);
 taskTimeStart.appendChild(selectHours);
 taskTimeStart.appendChild(hoursLabel);
 taskTimeStart.appendChild(selectMinutes);
