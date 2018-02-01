@@ -24,8 +24,8 @@ var addTaskForm = document.createElement("form"),
 
 taskTimeStart.className = "task-time task-time-start";
 
-hoursLabel.innerText = "hh";
-minutesLabel.innerText = "mm";
+hoursLabel.innerText = "ч";
+minutesLabel.innerText = "мин";
 addTaskForm.name = "createTask";
 selectHours.name = "selectHours";
 selectMinutes.name = "selectMinutes";
@@ -47,9 +47,8 @@ plannerTaskList.classList.add("planner-task-list");
 newTaskButton.classList.add("new-task-button");
 newTaskButton.innerText = "Новая задача";
 
-
-planner.appendChild(plannerBlock);
 planner.appendChild(watchBlock);
+planner.appendChild(plannerBlock);
 watchBlock.appendChild(currentTask);
 watchBlock.appendChild(watchDisplay);
 
@@ -61,12 +60,11 @@ plannerBlock.appendChild(newTaskButton);
 
 addTaskForm.appendChild(addTaskInput);
 addTaskForm.appendChild(taskTimeStart);
-taskTimeStart.appendChild(hoursLabel);
-taskTimeStart.appendChild(hoursLabel);
+//taskTimeStart.appendChild(hoursLabel);
 taskTimeStart.appendChild(selectHours);
-taskTimeStart.appendChild(minutesLabel);
+taskTimeStart.appendChild(hoursLabel);
 taskTimeStart.appendChild(selectMinutes);
-
+taskTimeStart.appendChild(minutesLabel);
 
 taskTimeEnd = taskTimeStart.cloneNode(true);
 taskTimeEnd.className = "task-time task-time-end";
@@ -122,14 +120,12 @@ Planner.prototype.addTask = function (task) {
 
 Planner.prototype.showWaitingList = function () {
     plannerTaskList.innerHTML = "";
-
     this.waitingTasks.forEach(function (task) {
         var plannerTaskItem = document.createElement("li");
         plannerTaskItem.classList.add("planner-task-item");
         plannerTaskItem.innerHTML = task.message;
+        plannerTaskList.appendChild(plannerTaskItem);
     })
-    plannerTaskList.appendChild(plannerTaskItem);
-
 }
 
 Planner.prototype.showActiveTask = function (currentHour, currentMinutes) {
@@ -180,19 +176,5 @@ function showCurrentTask(hours, minutes) {
         }
     });
 };
-
-
-
-setInterval(function () {
-    var time = new Date(),
-        hours = time.getHours(),
-        minutes = time.getMinutes(),
-        seconds = time.getSeconds();
-    if (hours < 10) hours = "0" + hours;
-    if (minutes < 10) minutes = "0" + minutes;
-    if (seconds < 10) seconds = "0" + seconds;
-    watchDisplay.innerHTML = hours + ":" + minutes + ":" + seconds;
-    newPlanner.showActiveTask(hours, minutes);
-}, 1000);
 
 var newPlanner = new Planner();
