@@ -14,6 +14,32 @@ app.use(bodyParser.urlencoded({
 
 app.use("/assets", express.static(__dirname + "/assets"));
 
+function checkExistingData(data) {
+    var check = dataList.find(function (obj) {
+        return obj.key === data.key;
+    });
+
+    if (!check) {
+        dataList.push(data);
+        console.log(dataList);
+        writeData(function () {
+        })
+    }
+}
+
+function writeData(cb) {
+    fs.writeFile("./data/requests.json",
+        JSON.stringify(dataList), cb);
+};
+
+function getRelevant(data) {
+    var regexp = new RegExp("^" + data.key);
+    var relevantArr = dataList.filter(function (obj) {
+        return regexp.test(obj.key);
+    })
+    return relevantArr;
+}
+
 
 app.get("/", function (request, response) {
     console.log(request.query);
@@ -22,30 +48,10 @@ app.get("/", function (request, response) {
 
 app.post("/search", function (request, response) {
     var dataItem = request.body;
-    console.log(dataItem);
-    dataList.push(dataItem);
-    console.log(dataList);
-    fs.writeFile("./data/requests.json",
-        JSON.stringify(dataList), function () {
-            response.send(dataItem);
-        });
+    checkExistingData(dataItem);
+    response.json(getRelevant(dataItem));
 });
 
 app.listen(port, function () {
     console.log("Server is running on port " + port);
 });
-
-/* function checkExistData(data) {
-    dataList.forEach(function (obj) {
-        console.log(obj.key);
-        console.log(data.key);
-        if (obj.key !== data.key) {
-            dataList.push(data);
-        }
-    })
-}
-
-function writeData(cb) {
-    fs.writeFile("./data/requests.json",
-        JSON.stringify(dataList), cb);
-}; */
