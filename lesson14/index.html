@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script src="/assets/request.js"></script>
+    <script src="assets/request.js"></script>
 </head>
 
 <body>
@@ -14,9 +14,9 @@
     <ul id="relevant"></ul>
 
     <script>
-        var r = new Request("http://localhost:3000/search");
-        searchInput.addEventListener("keyup", function (e) {
-            r.ask({key: this.value});
+        var quary = new Request("http://localhost:3000/search");
+        searchInput.addEventListener("keyup", function () {
+            quary.ask({ key: this.value });
         })
     </script>
 </body>
