@@ -48,8 +48,9 @@ app.get("/", function (request, response) {
 
 app.post("/search", function (request, response) {
     var dataItem = request.body;
+    var dataResult = getRelevant(dataItem)
     checkExistingData(dataItem);
-    response.json(getRelevant(dataItem));
+    response.json(dataResult);
 });
 
 app.listen(port, function () {
