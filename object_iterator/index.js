@@ -1,5 +1,6 @@
 const obj = { d: 20, a: 5, c: 15, b: 10 };
 
+
 obj[Symbol.iterator] = function () {
     const keys = Object.keys(this).sort();
     let index = 0;
