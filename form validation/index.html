@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="./node_modules/lodash.debounce/index.js"></script>
+</head>
+
+<body>
+    <form id="register_form">
+
+        <label>Login:
+            <input class="" type="text" id="login" placeholder="example@gmail.com" required>
+            <span class="error-msg"></span>
+        </label>
+        </br>
+
+        <label>Password:
+            <input type="password" id="password" required>
+            <span class="error-msg"></span>
+        </label>
+        </br>
+
+        <label>Repeat password:
+            <input type="password" id="password_repeat" required>
+            <span class="error-msg"></span>
+        </label>
+        </br>
+        <button type="submit ">Register</button>
+    </form>
+
+    <script src="./validation_form.js "></script>
+
+</body>
+
+</html>
