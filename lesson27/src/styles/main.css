@@ -1,0 +1,83 @@
+nav {
+    background-color: rgb(31, 84, 199);
+    color: rgba(255, 255, 255, 0.8);
+    font-family: Arial, Helvetica, sans-serif;
+    position: relative;
+}
+
+nav a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.8)
+}
+nav li {
+    list-style: none;
+    background-color: rgb(31, 84, 199);
+    padding: 7px 30px;
+    border: 1px solid rgb(119, 148, 209);
+    border-top: none;
+}
+nav li:hover {
+    background-color: rgba(205, 211, 245, 0.9);
+    color: rgb(63, 108, 204);
+    transition: all 0.3s ease;
+}
+
+nav a:hover {
+    color: rgb(63, 108, 204);
+    transition: all 0.3s ease;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+}
+
+.menu_btn {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.8);
+    background-color: rgb(31, 84, 199);
+    cursor: pointer;
+    padding: 7px 34px;
+    margin: 5px 10px;
+}
+.menu_btn:hover {
+    color: rgba(255, 255, 255, 0.9);
+    background-color: rgb(63, 108, 204);
+}
+.menu_btn:focus {
+    outline: none;
+}
+
+.menu {
+    position: absolute;
+    left: 10px;
+    display: none;
+    transition: all 1s ease-out;
+}
+.menu > li{
+    position: relative;
+    width: 50px;
+    cursor: pointer;
+}
+.submenu {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    display: none;
+}
+.submenu li {
+    padding: 0;
+}
+.submenu a {
+    display: block;
+    padding: 7px 30px;
+}
+.active {
+    display: block;
+}
+
+#canvas {
+    position: absolute;
+    top: 0;
+    left: 0; 
+}
