@@ -9,11 +9,37 @@ module.exports = {
     },
     output: {
         path: join(__dirname, "./dist"),
-        filename: "bundle.js"
+        filename: "bundle.js",
+        library: "home"
     },
     module: {
         rules: [
-            {test: /\.css$/, use: ExtractTextPlugin.extract("css-loader")}
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: "babel-loader"
+            },
+            {
+                test: /\.scss$/, use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                minimize: true,
+                                sourceMap: true
+                            }
+                        },
+                        {
+                            loader: "sass-loader"
+                        }
+                    ]
+                })
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
+                loader: "file-loader?name=/src/img/[name].[ext]"
+            }
         ]
     },
     plugins: [
@@ -22,5 +48,6 @@ module.exports = {
             template: "./src/index.html"
         }),
         //new UglifyPlugin()
-    ]
+    ],
+    devtool: "source-map"
 };

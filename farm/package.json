@@ -1,5 +1,5 @@
 {
-  "name": "lesson18",
+  "name": "Farm",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,10 +10,18 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
     "css-loader": "^0.28.10",
     "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.11",
     "html-webpack-plugin": "^2.30.1",
+    "node-sass": "^4.8.3",
+    "sass-loader": "^6.0.7",
+    "style-loader": "^0.20.3",
     "uglifyjs-webpack-plugin": "^1.2.0",
+    "url-loader": "^1.0.1",
     "webpack": "^3.11.0",
     "webpack-dev-server": "^2.11.1"
   }

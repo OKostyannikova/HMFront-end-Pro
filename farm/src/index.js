@@ -1,11 +1,9 @@
-import { farm } from "./js/product";
+require("./styles/style.scss");
 
-require("./styles/style.css");
+import { farm } from "./js/product";
 require("./js/dom");
 require("./js/product");
 
-farm.plant();
-
-setTimeout(function () {
-    farm.plant();
-}, 80000);
+export {
+    farm
+}

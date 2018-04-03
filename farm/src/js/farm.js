@@ -1,26 +1,12 @@
 import { productList } from "./dom";
 
 export default class Farm {
-    constructor(resources) {
-        this.field = [];
-        this.field = this.field.concat(resources);
+    constructor(products) {
+        this.shop = products;
         this.storage = [];
-        this.market = [];
         this.coin = 0;
+        this.inventory = [];
     }
-
-    plant() {
-        this.field.forEach(function (resource) {
-            resource.plant();
-        });
-        this.timer();
-    };
-
-    harvest() {
-        this.field.forEach(function (resource) {
-            resource.harvest();
-        });
-    };
 
     showProductsList() {
         productList.innerHTML = "";
@@ -32,7 +18,7 @@ export default class Farm {
     }
 
     sellProducts() {
-        this.storage.forEach(function (product) {
+        this.storage.forEach((product) => {
             this.coin += product.cost * product.income;
             delete product.income;
         });
@@ -40,9 +26,8 @@ export default class Farm {
     }
 
     timer() {
-        let self = this;
-        let timer = setInterval(function () {
-            let ready = self.field.every(function (resource) {
+        let timer = setInterval(() => {
+            let ready = this.field.every((resource) => {
                 return resource.readyHarvest === 1;
             });
             if (ready) {
