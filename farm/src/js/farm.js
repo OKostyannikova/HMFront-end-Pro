@@ -1,21 +1,38 @@
-import { productList } from "./dom";
+import { shopWindow, moneyDom } from "./dom";
 
 export default class Farm {
     constructor(products) {
         this.shop = products;
         this.storage = [];
-        this.coin = 0;
+        this.coin = 20;
         this.inventory = [];
     }
-
     showProductsList() {
-        productList.innerHTML = "";
-        this.storage.forEach(function (product) {
-            let productListElement = document.createElement("li");
-            productListElement.innerHTML = product.income + " " + product.type + "(s)";
-            productList.appendChild(productListElement);
+        this.shop.forEach((product) => {
+            let seed = document.createElement("div"),
+                seedIcon = new Image(),
+                seedPrice = document.createElement("span");
+
+            seedIcon.src = product.icon;
+            seedPrice.innerHTML = ` ${product.cost}$`;
+
+            seed.appendChild(seedIcon);
+            seed.appendChild(seedPrice);
+            shopWindow.appendChild(seed);
         })
     }
+    showMoney() {
+        moneyDom.innerHTML = this.coin;
+    }
+
+    /*   showProductsList() {
+          productList.innerHTML = "";
+          this.storage.forEach(function (product) {
+              let productListElement = document.createElement("li");
+              productListElement.innerHTML = product.income + " " + product.type + "(s)";
+              productList.appendChild(productListElement);
+          })
+      } */
 
     sellProducts() {
         this.storage.forEach((product) => {

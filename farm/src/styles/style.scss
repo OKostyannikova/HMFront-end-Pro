@@ -1,118 +1,64 @@
-/*  #farm {
-    background-color: #F8F4DB;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-}
-
-#field {
-    background-color: #61AE24;
-    width: 70%;
-    min-height: 300px;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-#field > div {
-    width: 30%;
-    height: 80px;
-    background-color: #F18D05;
-}
-
-#buildings {
-    width: 20%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-#buildings > div {
-    background-color: #7f7f7f;
-    padding: 15px;
-    height: 127px;
-}
-h4 {
-    margin-top: 0;
-    font-family: "Arial", sans-serif;
-}
-.resource-title {
-    margin-top: 10px;
-    text-align: center;
-}  */
 body {
     position: relative;
     height: 100vh;
     background: url("../img/land.png") no-repeat;
     background-size: cover;
+    font-family: 'Fjalla One', sans-serif;
 }
-#field {
+
+@import "_field.scss";
+
+.inventory, #shop, #barn {
+    position: fixed;
+    background-color: rgba(95,84,74, 0.6);
+    border: 3px solid rgba(95,84,74, 0.9);
+    border-radius: 10px;
+}
+
+.inventory {
+    left: calc(50% - 350px);
+    bottom: -10px;
+    width: 700px;
+    height: 120px;
+}
+
+#shop {
+    left: -156px;
+    top: 6px;
+    width: 150px;
+    height: 600px;
+    transition: left 0.5s ease-in-out;
+}
+
+#shop_btn {
     position: absolute;
-    top: 100px;
-    left: calc(50% - 400px);
-    width: 800px;
-    height: 440px;
-    background: url("../img/field.png") no-repeat center center;
-    background-size: 100%;
+    top: 44px;
+    left: 84%;
+    font-size: 20px;
+    color: #b6c4ad;
+    padding: 8px 25px;
+    background-color: rgba(95,84,74,.6);
+    border: 3px solid rgba(95,84,74,.9);
+    border-radius: 10px 10px 0 0;
+    transform: rotate(90deg);
+    cursor: pointer;
 }
-#field-grid {
-    position: absolute;
-    top: 49px;
-    left: 183px;
-    width: 440px;
-    height: 340px;
-    transform: rotate(27deg) skewX(-36deg);
-    td {
-        //border: 1px solid gray;
-    }
+
+.show_shop {
+    left: -16px !important;
 }
-#land-grid {
-    padding: 0;
-    margin: 0;
-    li {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        position: absolute;
-        img {
-            width: 230px;
-            height: 110px;
-        }
-    }
+
+#money {
+    position: fixed;
+    top: 5px;
+    right: 50px;
+    font-size: 18px;
+    color: #cfd4cc
 }
-#A1 {
+
+#barn {
     top: 30px;
-    left: 277px;
-}
-#A2 {
-    top: 98px;
-    left: 408px;
-}
-#A3 {
-    top: 164px;
-    left: 538px;
-}
-#B1 {
-    top: 93px;
-    left: 155px;
-}
-#B2 {
-    top: 163px;
-    left: 291px;
-}
-#B3 {
-    top: 228px;
-    left: 425px;
-}
-#C1 {
-    top: 156px;
-    left: 30px;
-}
-#C2 {
-    top: 225px;
-    left: 166px;
-}
-#C3 {
-    top: 290px;
-    left: 298px;
+    right: -16px;
+    width: 150px;
+    height: 400px;
 }
