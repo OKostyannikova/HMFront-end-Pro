@@ -1,15 +1,9 @@
-import { shopWindow, moneyDom } from "./dom";
-
 export default class Farm {
     constructor(products) {
         this.shop = products;
         this.storage = [];
         this.coins = 100;
         this.inventory = [];
-    }
-
-    showMoney() {
-        moneyDom.innerHTML = this.coins;
     }
 
     sellProducts() {
