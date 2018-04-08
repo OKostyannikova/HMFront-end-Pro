@@ -23,10 +23,10 @@ shopBtn.addEventListener("click", () => {
     shopWindow.classList.toggle("show_shop");
 });
 
-window.onload = function () {
+/* window.onload = function () {
     farm.showProductsList();
     farm.showMoney();
-}
+} */
 
 export {
     shopWindow,

@@ -8,14 +8,14 @@ body {
 
 @import "_field.scss";
 
-.inventory, #shop, #barn {
+#inventory, #shop, #barn {
     position: fixed;
     background-color: rgba(95,84,74, 0.6);
     border: 3px solid rgba(95,84,74, 0.9);
     border-radius: 10px;
 }
 
-.inventory {
+#inventory {
     left: calc(50% - 350px);
     bottom: -10px;
     width: 700px;
@@ -28,6 +28,22 @@ body {
     width: 150px;
     height: 600px;
     transition: left 0.5s ease-in-out;
+    
+    img{
+        width: 60px;
+        cursor: pointer;
+    }
+    span {
+        color:  #b6c4ad;
+    }
+}
+
+#seeds-list > div {
+    margin: 20px 10px 0 20px;
+}
+
+.seed-price::after {
+    content: "$";
 }
 
 #shop_btn {

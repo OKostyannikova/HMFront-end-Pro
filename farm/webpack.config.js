@@ -15,7 +15,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.jsx?$/,
                 exclude: /node_modules/,
                 loader: "babel-loader"
             },
@@ -46,7 +46,7 @@ module.exports = {
         new ExtractTextPlugin("style.css"),
         new HtmlWebpackPlugin({
             template: "./src/index.html"
-        }),
+        })
         //new UglifyPlugin()
     ],
     devtool: "source-map"
