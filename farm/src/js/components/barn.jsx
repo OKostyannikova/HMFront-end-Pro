@@ -2,10 +2,10 @@ import React from "react";
 
 export default class extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
     }
 
     render() {
-        return <div id="money">Money: <span>{this.props.money}</span>$</div>
+        return <div id="barn"></div>
     }
 }

@@ -4,7 +4,7 @@ export default class Farm {
     constructor(products) {
         this.shop = products;
         this.storage = [];
-        this.coins = 20;
+        this.coins = 100;
         this.inventory = [];
     }
 
