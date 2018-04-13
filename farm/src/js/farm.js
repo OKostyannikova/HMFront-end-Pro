@@ -2,7 +2,8 @@ export default class Farm {
     constructor(products) {
         this.shop = products;
         this.storage = [];
-        this.coins = 100;
+        this.field = [];
+        this.coins = 1000;
         this.inventory = [];
     }
 
@@ -12,18 +13,6 @@ export default class Farm {
             delete product.income;
         });
         this.storage.length = 0;
-    }
-
-    timer() {
-        let timer = setInterval(() => {
-            let ready = this.field.every((resource) => {
-                return resource.readyHarvest === 1;
-            });
-            if (ready) {
-                clearInterval(timer);
-                console.log("All resources ready to harvest");
-            }
-        }, 2000);
     }
 }
 

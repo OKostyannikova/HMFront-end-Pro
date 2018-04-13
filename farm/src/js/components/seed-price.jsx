@@ -1,3 +1,3 @@
 import React from "react";
 
-export default ({ cost }) => <span className = "seed-price">{cost}</span>
+export default ({ cost }) => <span className = "seed_price">{cost}</span>

@@ -3,7 +3,7 @@ import SeedIcon from "./seed-icon.jsx";
 import SeedPrice from "./seed-price.jsx";
 import Notification from "./notification.jsx";
 import { farm, productsList } from "../product.js";
-import PriceAndProductType from "../libs/determine-price-and-product-type.js";
+import PriceAndProductType from "../libs/get-price-and-product-type.js";
 import showNotification from "../libs/show-notification.js"
 
 
@@ -21,17 +21,19 @@ export default class extends React.Component {
     buySeeds(e) {
         const { seedPrice, purchasedSeed } = PriceAndProductType(e);
         if (farm.coins >= seedPrice) {
-            if (purchasedSeed.among) {
-                purchasedSeed.among++
-            } else {
+            const check = farm.inventory.some(el => el.type === purchasedSeed.type);
+            if (!check) {
                 purchasedSeed.among = 1;
                 farm.inventory.push(purchasedSeed);
+            } else {
+                farm.inventory.forEach(el => {
+                    el.type === purchasedSeed.type ? el.among++ : null;
+                })
             }
             farm.coins -= seedPrice;
             this.props.updateCoins();
             this.props.updateInventory();
         } else {
-            
             showNotification(e.currentTarget.previousElementSibling);
         }
     }

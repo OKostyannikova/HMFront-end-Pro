@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { farm, productsList } from "./product.js";
+import Field from "./components/field.jsx";
 import Money from "./components/money.jsx";
 import ShopList from "./components/shop-list.jsx";
 import Barn from "./components/barn.jsx";
@@ -29,10 +30,11 @@ class App extends React.Component {
 
     render() {
         return <div id="farm">
+            <Field />
             <Money coins={this.farm.coins} money={this.state.money} />
             <ShopList shop={this.farm.shop} updateCoins={this.updateCoins} updateInventory={this.updateInventory} />
             <Barn />
-            <Inventory inventoryList={this.farm.inventory} inventory={this.state.inventory} />
+            <Inventory inventoryList={this.farm.inventory} inventory={this.state.inventory} updateInventory={this.updateInventory} />
         </div >
     }
 }

@@ -1,62 +1,48 @@
 import { farm } from "./product";
 
 export default class Resource {
-    constructor(name, product) {
-        this.name = name;
+    constructor(plot, product) {
+        this.plot = plot;
+        this.land = this.plot.firstChild;
         this.product = product;
-        this.readyHarvest = 0;
-        this.income = 0;
-        this.durability = 5;
+        this.readyHarvest = false;
         this.sown = false;
     }
 
-    isReadyForPlanting() {
-        return this.sown === false && this.durability > 0;
-    };
-
     plant() {
-        try {
-            if (!this.isReadyForPlanting()) {
-                throw new Error("Resource is already planted!")
-            }
-            this.sown = true;
-            this.durability -= 1;
-            this.render();
-            this.grow();
-        } catch (err) {
-            console.error(err);
-        }
+        this.sown = true;
+        this.plot.className = "";
+        this.updateInventory();
+        this.grow();
     };
 
-    render() {
-        let landPlot = document.createElement("div"),
-            plotTitle = document.createElement("h4"),
-            listOfProducts = document.createElement("ul"),
-            listElement = document.createElement("li");
-
-        landPlot.classList.add("land_plot");
-        plotTitle.classList.add("land_plot-title");
-
-        plotTitle.innerHTML = this.name;
-        listElement.innerHTML = this.product.type;
-
-        field.appendChild(landPlot);
-        landPlot.appendChild(plotTitle);
-        landPlot.appendChild(listOfProducts);
-        listOfProducts.appendChild(listElement);
-
-        landPlot.addEventListener("click", (e) => {
-            this.harvest();
-            e.currentTarget.innerHTML = "";
+    updateInventory() {
+        farm.inventory.forEach((el, i, inventory) => {
+            el.type === this.product.type ? el.among-- : null;
+            el.among == 0 ? inventory.splice(i, 1) : null;
         })
-    };
+    }
 
     grow() {
+        let { possibleIncome } = this.product;
         setTimeout(() => {
-            this.readyHarvest = 1;
-            this.income = Math.floor(Math.random() * (20 - 15) + 15);
-        }, 2000);
+            this.readyHarvest = true;
+            this.income = Math.floor(Math.random() * ((possibleIncome + 5) - possibleIncome) + possibleIncome);
+        }, this.product.growthTime);
+
+        this.growAnimation();
+        this.plot.onclick = (e) => this.harvest();
     };
+
+    growAnimation() {
+        const images = this.product.growImgs.slice();
+        let growTime = this.product.growthTime;
+        let land = this.land;
+        (function f() {
+            const image = images.shift();
+            image && (land.src = image) && setTimeout(f, growTime / 3);
+        }())
+    }
 
     harvest() {
         if (this.readyHarvest) {
@@ -66,18 +52,19 @@ export default class Resource {
                 this.product.income = this.income;
                 farm.storage.push(this.product);
             }
-            this.readyHarvest = 0;
+            this.readyHarvest = false;
             this.sown = false;
-            console.log(farm.storage);
-            farm.showProductsList();
-            console.log("Grew " + this.income + " " + this.name);
+            this.restorePlot();
+
+            console.log("Grew " + this.income + " " + this.product.type);
         } else {
             console.log("Nothing to harvest!");
         }
     };
 
-    restore() {
-        this.durability = 5;
-    };
-
+    restorePlot() {
+        this.plot.className = "free_seed-plot";
+        this.land.src = "./src/img/unit_land.png";
+        this.plot.onclick = null;
+    }
 }

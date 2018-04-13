@@ -1,4 +1,4 @@
-import { farm, productsList } from "../product.js";
+import { productsList } from "../product.js";
 
 export default (e) => {
     const seedPrice = e.currentTarget.nextElementSibling.innerText;

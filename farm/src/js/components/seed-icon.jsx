@@ -1,4 +1,5 @@
 import React from "react";
-import { farm } from "../product.js";
 
-export default ({ icon, handlerClick }) => <img src={icon} onClick={handlerClick} />
+export default ({ icon, handlerClick, dragAndPlant }) => {
+    return <img src={icon} onClick={handlerClick} onMouseDown={dragAndPlant} />
+}
