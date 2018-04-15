@@ -1,16 +1,14 @@
 export default class Farm {
-    constructor(products) {
+    constructor(products, storage) {
         this.shop = products;
         this.storage = [];
-        this.field = [];
-        this.coins = 1000;
+        this.coins = 100;
         this.inventory = [];
     }
 
     sellProducts() {
         this.storage.forEach((product) => {
             this.coins += product.cost * product.income;
-            delete product.income;
         });
         this.storage.length = 0;
     }

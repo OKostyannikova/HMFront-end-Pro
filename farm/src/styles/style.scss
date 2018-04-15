@@ -1,4 +1,5 @@
 body {
+    color: #b6c4ad;
     position: relative;
     height: 100vh;
     background: url("../img/land.png") no-repeat;
@@ -16,10 +17,10 @@ body {
 }
 
 #inventory {
-    left: calc(50% - 350px);
+    left: calc(50% - 325px);
     bottom: -10px;
     width: 650px;
-    height: 120px;
+    height: 100px;
     display: flex;
     align-items: center;
 
@@ -31,12 +32,6 @@ body {
     img {
         width: 60px;
         cursor: pointer;
-    }
-    span {
-        color:  #b6c4ad;
-        &::before {
-            content: "x";
-        }
     }
 }
 
@@ -51,9 +46,6 @@ body {
         width: 60px;
         cursor: pointer;
     }
-    span {
-        color:  #b6c4ad;
-    }
 }
 
 #seeds_list > div {
@@ -63,6 +55,12 @@ body {
 
 .seed_price::after {
     content: "$";
+}
+
+.product_among::before {
+    content: " x";
+    font-size: 12px;
+    vertical-align: text-top;
 }
 
 #shop_btn {
@@ -111,12 +109,37 @@ body {
     top: 5px;
     right: 50px;
     font-size: 18px;
-    color: #cfd4cc
+    color: #cfd4cc;
 }
 
 #barn {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
     top: 30px;
     right: -16px;
-    width: 150px;
-    height: 400px;
+    width: 300px;
+    height: 200px;
+    font-size: 14px;
+
+    > div {
+        margin: 7px 10px;
+    }
+
+    img {
+        width: 45px;
+    }
+}
+
+.sell_btn {
+    position: absolute;
+    bottom: 10px;
+    left: calc(50% - 133px / 2) ;
+    color: #cfd4cc;
+    font-size: 18px;
+    padding: 3px 40px;
+    background-color: rgba(138, 123, 110, 0.6);
+    border: 2px solid rgba(146, 133, 121, 0.9);
+    border-radius: 8px;
+    cursor: pointer;
 }

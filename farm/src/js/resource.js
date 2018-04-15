@@ -6,11 +6,10 @@ export default class Resource {
         this.land = this.plot.firstChild;
         this.product = product;
         this.readyHarvest = false;
-        this.sown = false;
     }
 
-    plant() {
-        this.sown = true;
+    plant(updateStorage) {
+        this.updateStorage = updateStorage;
         this.plot.className = "";
         this.updateInventory();
         this.grow();
@@ -27,7 +26,7 @@ export default class Resource {
         let { possibleIncome } = this.product;
         setTimeout(() => {
             this.readyHarvest = true;
-            this.income = Math.floor(Math.random() * ((possibleIncome + 5) - possibleIncome) + possibleIncome);
+            this.income = Math.floor(Math.random() * ((possibleIncome + 2) - possibleIncome + 1) + possibleIncome);
         }, this.product.growthTime);
 
         this.growAnimation();
@@ -36,26 +35,35 @@ export default class Resource {
 
     growAnimation() {
         const images = this.product.growImgs.slice();
-        let growTime = this.product.growthTime;
+        let { growthTime } = this.product;
         let land = this.land;
         (function f() {
             const image = images.shift();
-            image && (land.src = image) && setTimeout(f, growTime / 3);
+            image && (land.src = image) && setTimeout(f, growthTime / 3);
         }())
     }
 
     harvest() {
         if (this.readyHarvest) {
-            if (this.product.income) {
-                this.product.income += this.income;
+            const readyProduct = {
+                type: this.product.type,
+                icon: this.product.icon,
+                income: this.income,
+                cost: this.product.cost
+            };
+
+            const isProduct = farm.storage.some(el => el.type === readyProduct.type);
+
+            if (!isProduct) {
+                farm.storage.push(readyProduct);
             } else {
-                this.product.income = this.income;
-                farm.storage.push(this.product);
+                farm.storage.forEach(el => {
+                    el.type === readyProduct.type && (el.income += readyProduct.income)
+                })
             }
             this.readyHarvest = false;
-            this.sown = false;
             this.restorePlot();
-
+            this.updateStorage();
             console.log("Grew " + this.income + " " + this.product.type);
         } else {
             console.log("Nothing to harvest!");

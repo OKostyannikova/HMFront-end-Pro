@@ -7,17 +7,18 @@ import dragNDrop from "../libs/drag-manager.js";
 export default class extends React.Component {
     constructor(props) {
         super(props);
-        this.inventoryList = this.props.inventoryList;
+        this.inventory = this.props.inventory;
         this.dragAndPlant = this.dragAndPlant.bind(this);
     }
+    
     dragAndPlant(e) {
-        dragNDrop(e, this.props.updateInventory);
+        dragNDrop(e, this.props.updateInventory, this.props.updateStorage);
     }
 
 
     render() {
         return <div id="inventory">
-            {this.inventoryList.map(el => <div key={el.type}>
+            {this.inventory.map(el => <div key={el.type}>
                 <SeedIcon icon={el.icon} handlerClick={null} dragAndPlant={this.dragAndPlant} />
                 <SeedAmong among={el.among} />
             </div>)}
