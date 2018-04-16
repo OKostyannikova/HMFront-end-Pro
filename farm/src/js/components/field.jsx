@@ -14,13 +14,6 @@ export default class extends React.Component {
                     <img src="./src/img/unit_land.png" />
                 </li>)}
             </ul>
-            {/* <table id="field-grid">
-                <tbody>
-                    <tr><td></td><td></td><td></td></tr>
-                    <tr><td></td><td></td><td></td></tr>
-                    <tr><td></td><td></td><td></td></tr>
-                </tbody>
-            </table> */}
         </div>
     }
 }

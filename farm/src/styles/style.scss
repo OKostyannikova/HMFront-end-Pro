@@ -1,17 +1,25 @@
 body {
-    color: #b6c4ad;
+    color: #c4cec4;
     position: relative;
     height: 100vh;
     background: url("../img/land.png") no-repeat;
     background-size: cover;
-    font-family: 'Fjalla One', sans-serif;
+    font-family: 'Hammersmith One', sans-serif;
+}
+
+.ornamentals {
+    width: 1500px;
+    height: 100vh;
+    margin: 0 auto;
+    background: url(../img/ornamentals.png) no-repeat;
+    background-size: cover;
 }
 
 @import "_field.scss";
 
 #inventory, #shop, #barn {
     position: fixed;
-    background-color: rgba(95,84,74, 0.6);
+    background-color: rgba(95,84,74, 0.7);
     border: 3px solid rgba(95,84,74, 0.9);
     border-radius: 10px;
 }
@@ -27,6 +35,7 @@ body {
     > div {
         margin-left: 14px;
         margin-right: 14px;
+        cursor: pointer;
     }
 
     img {
@@ -66,9 +75,8 @@ body {
 #shop_btn {
     position: absolute;
     top: 44px;
-    left: 84%;
+    left: 81%;
     font-size: 20px;
-    color: #b6c4ad;
     padding: 8px 25px;
     background-color: rgba(95,84,74,.6);
     border: 3px solid rgba(95,84,74,.9);
@@ -107,9 +115,9 @@ body {
 #money {
     position: fixed;
     top: 5px;
-    right: 50px;
+    right: 80px;
     font-size: 18px;
-    color: #cfd4cc;
+    color: #e4e8e1;
 }
 
 #barn {
@@ -118,7 +126,7 @@ body {
     align-content: flex-start;
     top: 30px;
     right: -16px;
-    width: 300px;
+    width: 270px;
     height: 200px;
     font-size: 14px;
 
@@ -135,11 +143,18 @@ body {
     position: absolute;
     bottom: 10px;
     left: calc(50% - 133px / 2) ;
-    color: #cfd4cc;
+    color: #c4cec4;
+    font-family: 'Hammersmith One', sans-serif;
     font-size: 18px;
     padding: 3px 40px;
     background-color: rgba(138, 123, 110, 0.6);
     border: 2px solid rgba(146, 133, 121, 0.9);
     border-radius: 8px;
+    outline: none;
     cursor: pointer;
+
+    &:hover {
+        background-color: hsla(28, 6%, 57%, 0.7);
+        border: 2px solid rgba(146, 133, 121, 0.7);
+    }
 }

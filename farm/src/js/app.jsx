@@ -36,9 +36,8 @@ class App extends React.Component {
 
     render() {
         return <div id="farm">
-
+            <div className="ornamentals"></div>
             <Field />
-
             <Money money={this.state.money} />
 
             <ShopList shop={this.farm.shop}
